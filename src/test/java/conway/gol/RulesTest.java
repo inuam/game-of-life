@@ -64,4 +64,19 @@ class RulesTest {
                 .isEqualTo(Dead);
     }
 
+    @DisplayName("Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.")
+    @ParameterizedTest(name="Live cell with  more {0} live neighbour dies")
+    @CsvSource(value = {"3"})
+    public void shouldComeAliveGivenADeadCellWith_ExactlyThreeLiveNeighbours(int liveNeighbours) {
+        // Given
+        Rules classToTest = new Rules();
+
+        // When
+        Cell actual = classToTest.apply(Dead, liveNeighbours);
+
+        // Then
+        assertThat(actual)
+                .isEqualTo(Alive);
+    }
+
 }

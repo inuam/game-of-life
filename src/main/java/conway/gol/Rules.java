@@ -8,8 +8,10 @@ public class Rules {
     public Cell apply(Cell currentState, int liveNeighbours) {
         if (currentState == Alive && liveNeighbours < 2)
             return Dead;
-        if(currentState == Alive && liveNeighbours > 3)
+        if (currentState == Alive && liveNeighbours > 3)
             return Dead;
+        if (currentState == Dead && liveNeighbours == 3)
+            return Alive;
 
         return currentState;
     }
