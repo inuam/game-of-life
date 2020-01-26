@@ -10,13 +10,16 @@ public class Rules {
         if (liveNeighbours > 8)
             throw new IllegalArgumentException("Cell neighbours can't exceed 8");
 
-        if (currentState == Alive && liveNeighbours < 2)
-            return Dead;
-        if (currentState == Alive && liveNeighbours > 3)
-            return Dead;
-        if (currentState == Dead && liveNeighbours == 3)
-            return Alive;
+        switch (currentState) {
+            case Alive:
+                if (liveNeighbours < 2 || liveNeighbours > 3)
+                    return Dead;
+            case Dead:
+                if (currentState == Dead && liveNeighbours == 3)
+                    return Alive;
+            default:
+                return currentState;
 
-        return currentState;
+        }
     }
 }
