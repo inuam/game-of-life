@@ -6,25 +6,18 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static conway.gol.Cell.ALIVE;
+import static conway.gol.Cell.DEAD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GridTest {
 
-    @Test
-    public void shouldInitialiseNextFrameWithSameDimensionsAsCurrentFrame() {
-        // Given
-        int size = 1;
-        Grid grid = new Grid(new Cell[size][size]);
-
-        // Then
-        assertThat(grid.getNextFrame()).isEqualTo(new Cell[size][size]);
-    }
+    private Rules rules = new Rules();
 
     @Test
     public void shouldReturnLiveNeighbours_GivenZeroLengthGrid() {
         // Given
         int gridSize = 0;
-        Grid grid = new Grid(new Cell[gridSize][gridSize]);
+        Grid grid = new Grid(new Cell[gridSize][gridSize], rules);
 
         // When
         int liveNeighbours = grid.getLiveNeighbours(0, 0);
@@ -37,7 +30,7 @@ class GridTest {
     public void shouldReturnLiveNeighbours_GivenSingleCellGrid() {
         // Given
         int gridSize = 1;
-        Grid grid = new Grid(new Cell[gridSize][gridSize]);
+        Grid grid = new Grid(new Cell[gridSize][gridSize], rules);
 
         // When
         int liveNeighbours = grid.getLiveNeighbours(0, 0);
@@ -55,7 +48,7 @@ class GridTest {
                 {ALIVE, ALIVE},
                 {ALIVE, ALIVE}
         };
-        Grid grid = new Grid(cells);
+        Grid grid = new Grid(cells, rules);
 
         // When
         int liveNeighbours = grid.getLiveNeighbours(x, y);
@@ -74,12 +67,51 @@ class GridTest {
                 {ALIVE, ALIVE, ALIVE},
                 {ALIVE, ALIVE, ALIVE}
         };
-        Grid grid = new Grid(cells);
+        Grid grid = new Grid(cells, rules);
 
         // When
         int liveNeighbours = grid.getLiveNeighbours(x, y);
 
         // Then
         assertThat(liveNeighbours).isEqualTo(expected);
+    }
+
+    @Test
+    public void shouldReturnNextFrameForGivenCurrentFrameOfAllAliveCells() {
+        // Given
+        Cell[][] cells = {
+                {ALIVE, ALIVE, ALIVE},
+                {ALIVE, ALIVE, ALIVE},
+                {ALIVE, ALIVE, ALIVE}
+        };
+        Grid grid = new Grid(cells, rules);
+
+        // When
+        Cell[][] nextFrame = grid.getNextFrame();
+
+        // Then
+        assertThat(nextFrame[0]).containsExactly(ALIVE, DEAD, ALIVE);
+        assertThat(nextFrame[1]).containsExactly(DEAD, DEAD, DEAD);
+        assertThat(nextFrame[2]).containsExactly(ALIVE, DEAD, ALIVE);
+    }
+
+    @Test
+    public void shouldReturnGridAfter2Ticks() {
+        // Given
+        Cell[][] cells = {
+                {ALIVE, ALIVE, ALIVE},
+                {ALIVE, ALIVE, ALIVE},
+                {ALIVE, ALIVE, ALIVE}
+        };
+        Grid grid = new Grid(cells, rules);
+
+        // When
+        grid.getNextFrame();
+        Cell[][] nextFrame = grid.getNextFrame();
+
+        // Then
+        assertThat(nextFrame[0]).containsExactly(DEAD, DEAD, DEAD);
+        assertThat(nextFrame[1]).containsExactly(DEAD, DEAD, DEAD);
+        assertThat(nextFrame[2]).containsExactly(DEAD, DEAD, DEAD);
     }
 }

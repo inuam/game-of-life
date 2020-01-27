@@ -1,19 +1,34 @@
 package conway.gol;
 
+import java.util.Arrays;
+
 import static conway.gol.Cell.ALIVE;
 
 public class Grid {
-    private final Cell[][] currentFrame;
-    private Cell[][] nextFrame;
+    private Cell[][] currentFrame;
+
+    private final Rules rules;
     private final int gridSize;
 
-    public Grid(Cell[][] currentFrame) {
+    public Grid(Cell[][] currentFrame, Rules rules) {
         this.currentFrame = currentFrame;
-        this.nextFrame = currentFrame;
         this.gridSize = currentFrame.length;
+        this.rules = rules;
     }
 
     public Cell[][] getNextFrame() {
+
+        Cell[][] nextFrame = new Cell[gridSize][gridSize];
+
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
+                int liveNeighbours = getLiveNeighbours(x, y);
+                Cell currentState = currentFrame[x][y];
+                Cell apply = rules.apply(currentState, liveNeighbours);
+                nextFrame[x][y] = apply;
+            }
+        }
+        currentFrame = nextFrame;
         return nextFrame;
     }
 
