@@ -5,8 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static conway.gol.Cell.Alive;
-import static conway.gol.Cell.Dead;
+import static conway.gol.Cell.ALIVE;
+import static conway.gol.Cell.DEAD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -27,11 +27,11 @@ class RulesTest {
         Rules classToTest = new Rules();
 
         // When
-        Cell actual = classToTest.apply(Alive, liveNeighbours);
+        Cell actual = classToTest.apply(ALIVE, liveNeighbours);
 
         // Then
         assertThat(actual)
-                .isEqualTo(Dead);
+                .isEqualTo(DEAD);
     }
 
     @DisplayName("Any live cell with two or three live neighbours lives on to the next generation.")
@@ -42,11 +42,11 @@ class RulesTest {
         Rules classToTest = new Rules();
 
         // When
-        Cell actual = classToTest.apply(Alive, liveNeighbours);
+        Cell actual = classToTest.apply(ALIVE, liveNeighbours);
 
         // Then
         assertThat(actual)
-                .isEqualTo(Alive);
+                .isEqualTo(ALIVE);
     }
 
     @DisplayName("Any live cell with more than three live neighbours dies, as if by overpopulation.")
@@ -57,11 +57,11 @@ class RulesTest {
         Rules classToTest = new Rules();
 
         // When
-        Cell actual = classToTest.apply(Alive, liveNeighbours);
+        Cell actual = classToTest.apply(ALIVE, liveNeighbours);
 
         // Then
         assertThat(actual)
-                .isEqualTo(Dead);
+                .isEqualTo(DEAD);
     }
 
     @DisplayName("Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.")
@@ -72,11 +72,11 @@ class RulesTest {
         Rules classToTest = new Rules();
 
         // When
-        Cell actual = classToTest.apply(Dead, liveNeighbours);
+        Cell actual = classToTest.apply(DEAD, liveNeighbours);
 
         // Then
         assertThat(actual)
-                .isEqualTo(Alive);
+                .isEqualTo(ALIVE);
     }
 
     @DisplayName("Any dead cell with exactly not three live neighbours becomes stays dead")
@@ -87,15 +87,15 @@ class RulesTest {
         Rules classToTest = new Rules();
 
         // When
-        Cell actual = classToTest.apply(Dead, liveNeighbours);
+        Cell actual = classToTest.apply(DEAD, liveNeighbours);
 
         // Then
         assertThat(actual)
-                .isEqualTo(Dead);
+                .isEqualTo(DEAD);
     }
 
     @ParameterizedTest(name = "Any cell with more than {0} cell should thrown illegal argument exception")
-    @CsvSource(value = {"Dead:9", "Alive:9"}, delimiter = ':')
+    @CsvSource(value = {"DEAD:9", "ALIVE:9"}, delimiter = ':')
     public void shouldThrowIllegalArgumentException_GivenACell_WithMoreThanEight_Neighbours(Cell cell, int neighbours) {
         // Given
         Rules classToTest = new Rules();

@@ -1,7 +1,7 @@
 package conway.gol;
 
-import static conway.gol.Cell.Alive;
-import static conway.gol.Cell.Dead;
+import static conway.gol.Cell.ALIVE;
+import static conway.gol.Cell.DEAD;
 
 public class Rules {
 
@@ -11,12 +11,12 @@ public class Rules {
             throw new IllegalArgumentException("Cell neighbours can't exceed 8");
 
         switch (currentState) {
-            case Alive:
+            case ALIVE:
                 if (liveNeighbours < 2 || liveNeighbours > 3)
-                    return Dead;
-            case Dead:
-                if (currentState == Dead && liveNeighbours == 3)
-                    return Alive;
+                    return DEAD;
+            case DEAD:
+                if (currentState == DEAD && liveNeighbours == 3)
+                    return ALIVE;
             default:
                 return currentState;
 
