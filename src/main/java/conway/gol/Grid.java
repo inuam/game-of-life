@@ -20,15 +20,18 @@ public class Grid {
     public int getLiveNeighbours(int x, int y) {
         int liveNeighbours = 0;
 
-        if (gridSize == 1 && currentFrame[0].length == 1)
+        // 1x1,0x0 grid has no neighbours
+        if (gridSize <= 1)
             return 0;
 
         // next right cell
         if (gridSize > x + 1 && currentFrame[x + 1][y] == ALIVE)
             liveNeighbours++;
+
         // next diagonally right down cell
         if (gridSize > y + 1 && gridSize > x + 1 && currentFrame[x + 1][y + 1] == ALIVE)
             liveNeighbours++;
+
         // cell below
         if (gridSize > y + 1 && currentFrame[x][y + 1] == ALIVE)
             liveNeighbours++;

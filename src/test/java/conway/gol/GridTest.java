@@ -21,13 +21,26 @@ class GridTest {
     }
 
     @Test
-    public void shouldReturnLiveNeighbour_GivenSingleCellGrid() {
+    public void shouldReturnLiveNeighbours_GivenZeroLengthGrid() {
         // Given
-        int row = 1, col = 1;
-        Grid grid = new Grid(new Cell[row][col]);
+        int gridSize = 0;
+        Grid grid = new Grid(new Cell[gridSize][gridSize]);
 
         // When
-        int liveNeighbours = grid.getLiveNeighbours(row, col);
+        int liveNeighbours = grid.getLiveNeighbours(0, 0);
+
+        // Then
+        assertThat(liveNeighbours).isEqualTo(0);
+    }
+
+    @Test
+    public void shouldReturnLiveNeighbours_GivenSingleCellGrid() {
+        // Given
+        int gridSize = 1;
+        Grid grid = new Grid(new Cell[gridSize][gridSize]);
+
+        // When
+        int liveNeighbours = grid.getLiveNeighbours(0, 0);
 
         // Then
         assertThat(liveNeighbours).isEqualTo(0);
