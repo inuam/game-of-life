@@ -12,3 +12,11 @@ It's a typical maven project using Junit 5
 ```shell script
 mvn clean test
 ``` 
+
+## Running the Application
+To run the application:
+
+```mvn clean compile exec:java```
+
+The application stops if the currentFrame == nextFrame || previousFrame == nextFrame or could go
+on forever if the patterns are 3 frames apart.

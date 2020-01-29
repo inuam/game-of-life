@@ -1,7 +1,5 @@
 package conway.gol;
 
-import java.util.Arrays;
-
 import static conway.gol.Cell.ALIVE;
 
 public class Grid {
@@ -22,10 +20,7 @@ public class Grid {
 
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
-                int liveNeighbours = getLiveNeighbours(x, y);
-                Cell currentState = currentFrame[x][y];
-                Cell apply = rules.apply(currentState, liveNeighbours);
-                nextFrame[x][y] = apply;
+                nextFrame[x][y] = rules.apply(currentFrame[x][y], getLiveNeighbours(x, y));
             }
         }
         currentFrame = nextFrame;
@@ -72,5 +67,9 @@ public class Grid {
             liveNeighbours++;
 
         return liveNeighbours;
+    }
+
+    public Cell[][] getCurrentFrame() {
+        return currentFrame;
     }
 }
