@@ -20,7 +20,7 @@ public class Grid {
 
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
-                nextFrame[x][y] = rules.apply(currentFrame[x][y], getLiveNeighbours(x, y));
+                nextFrame[x][y] = Rules.gameOfLifeRules.apply(currentFrame[x][y], getLiveNeighbours(x, y));
             }
         }
         currentFrame = nextFrame;

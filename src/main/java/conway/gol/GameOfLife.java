@@ -36,9 +36,9 @@ public class GameOfLife {
     }
 
     private void printFrame(Cell[][] frame) {
-        for (int x = 0; x < frame.length; x++) {
+        for (Cell[] cells : frame) {
             for (int y = 0; y < frame.length; y++) {
-                log.write(frame[x][y].ordinal() == 0 ? " . " : " 0 ");
+                log.write(cells[y] == Cell.DEAD ? " . " : " 0 ");
             }
             log.println();
         }
